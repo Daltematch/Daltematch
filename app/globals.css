@@ -248,3 +248,262 @@ a {
     padding-top: 28px;
   }
 }
+
+
+/* Initial STMS home shell */
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 68px;
+  padding: 0 20px;
+  background: rgba(255,255,255,.94);
+  border-bottom: 1px solid var(--line);
+  backdrop-filter: blur(10px);
+}
+
+.brand {
+  font-size: 19px;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.brand-subtitle {
+  margin-top: 2px;
+  color: var(--muted);
+  font-size: 10px;
+}
+
+.icon-button {
+  width: 38px;
+  height: 38px;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: var(--surface);
+  color: var(--text);
+  font-size: 20px;
+}
+
+.hero-card {
+  width: min(100%, 560px);
+  margin: 0 auto;
+  padding: 34px 18px 28px;
+}
+
+.eyebrow {
+  margin: 0 0 8px;
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .08em;
+}
+
+.hero-card h1 {
+  margin: 0;
+  font-size: clamp(32px, 8vw, 48px);
+  line-height: 1.15;
+  letter-spacing: -.055em;
+}
+
+.hero-card > p:last-of-type {
+  margin: 16px 0 0;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.tennis-ball {
+  margin-top: 18px;
+  font-size: 18px;
+}
+
+.section {
+  width: min(100%, 560px);
+  margin: 0 auto;
+  padding: 14px 18px;
+}
+
+.section-heading {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.section-heading h2 {
+  margin: 0;
+  font-size: 22px;
+  letter-spacing: -.04em;
+}
+
+.badge {
+  display: inline-flex;
+  min-width: 22px;
+  height: 22px;
+  align-items: center;
+  justify-content: center;
+  padding: 0 7px;
+  border-radius: 999px;
+  background: var(--accent);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.date {
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.notice-card,
+.schedule-card,
+.mini-card {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+
+.notice-card {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 15px 16px;
+}
+
+.notice-card strong {
+  font-size: 14px;
+}
+
+.notice-card span {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.schedule-card {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 17px 16px;
+}
+
+.schedule-main {
+  min-width: 0;
+}
+
+.type-pill {
+  display: inline-flex;
+  margin-bottom: 7px;
+  padding: 4px 7px;
+  border-radius: 7px;
+  background: var(--soft);
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.schedule-card h3,
+.mini-card h3 {
+  margin: 0;
+  font-size: 16px;
+  letter-spacing: -.03em;
+}
+
+.schedule-card p,
+.mini-card p:last-child {
+  margin: 6px 0 0;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.schedule-status {
+  flex: 0 0 auto;
+  color: var(--text);
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.two-column {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.two-column.section {
+  padding-top: 14px;
+}
+
+.mini-card {
+  padding: 16px;
+}
+
+.mini-card .eyebrow {
+  margin-bottom: 10px;
+}
+
+.floating-action {
+  position: fixed;
+  right: max(20px, calc((100vw - 560px) / 2 + 20px));
+  bottom: 88px;
+  z-index: 30;
+  width: 52px;
+  height: 52px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  font-size: 27px;
+  line-height: 1;
+  box-shadow: 0 10px 28px rgba(0,0,0,.16);
+}
+
+.bottom-nav {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 25;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  height: 68px;
+  background: rgba(255,255,255,.96);
+  border-top: 1px solid var(--line);
+  backdrop-filter: blur(10px);
+}
+
+.nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+  font-size: 10px;
+}
+
+.nav-item span {
+  font-size: 17px;
+  line-height: 1;
+}
+
+.nav-item.active {
+  color: var(--text);
+  font-weight: 700;
+}
+
+@media (max-width: 420px) {
+  .hero-card h1 {
+    font-size: 34px;
+  }
+
+  .section,
+  .hero-card {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+}
