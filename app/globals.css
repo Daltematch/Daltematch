@@ -1,0 +1,250 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap');
+
+:root {
+  --bg: #f6f7f9;
+  --surface: #ffffff;
+  --text: #17191d;
+  --muted: #6f747c;
+  --line: #e7e9ed;
+  --accent: #111827;
+  --soft: #f0f2f5;
+  --success: #1f7a4d;
+  --danger: #c43d3d;
+  --radius: 18px;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Noto Sans KR', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  line-height: 1.5;
+}
+
+button, input, select, textarea {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.stms-shell {
+  min-height: 100vh;
+  padding-bottom: 88px;
+}
+
+.stms-topbar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 68px;
+  padding: 0 20px;
+  background: rgba(255,255,255,.94);
+  border-bottom: 1px solid var(--line);
+  backdrop-filter: blur(10px);
+}
+
+.stms-brand {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.stms-brand strong {
+  font-size: 19px;
+  line-height: 1.1;
+}
+
+.stms-brand span {
+  color: var(--muted);
+  font-size: 10px;
+  letter-spacing: .02em;
+}
+
+.stms-main {
+  width: min(100%, 560px);
+  margin: 0 auto;
+  padding: 20px 16px 32px;
+}
+
+.stms-hero {
+  padding: 12px 2px 8px;
+}
+
+.stms-hero h1 {
+  margin: 0;
+  font-size: 28px;
+  letter-spacing: -0.04em;
+}
+
+.stms-hero p {
+  margin: 7px 0 0;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.stms-stack {
+  display: grid;
+  gap: 12px;
+}
+
+.stms-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 16px;
+}
+
+.stms-card-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.stms-card-title h2 {
+  margin: 0;
+  font-size: 16px;
+  letter-spacing: -0.02em;
+}
+
+.stms-badge {
+  display: inline-flex;
+  min-width: 22px;
+  height: 22px;
+  align-items: center;
+  justify-content: center;
+  padding: 0 7px;
+  border-radius: 999px;
+  background: var(--accent);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.stms-schedule {
+  display: grid;
+  gap: 6px;
+}
+
+.stms-schedule-name {
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.stms-meta {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.stms-status {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  margin-top: 6px;
+  padding: 5px 8px;
+  border-radius: 8px;
+  background: var(--soft);
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.stms-empty {
+  padding: 18px 6px;
+  color: var(--muted);
+  text-align: center;
+  font-size: 13px;
+}
+
+.stms-grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.stms-stat {
+  display: grid;
+  gap: 4px;
+}
+
+.stms-stat strong {
+  font-size: 22px;
+}
+
+.stms-stat span {
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.stms-floating {
+  position: fixed;
+  right: max(20px, calc((100vw - 560px) / 2 + 20px));
+  bottom: 88px;
+  z-index: 30;
+  width: 52px;
+  height: 52px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  font-size: 27px;
+  line-height: 1;
+  box-shadow: 0 10px 28px rgba(0,0,0,.16);
+}
+
+.stms-bottomnav {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 25;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  height: 68px;
+  background: rgba(255,255,255,.96);
+  border-top: 1px solid var(--line);
+  backdrop-filter: blur(10px);
+}
+
+.stms-bottomnav a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  color: var(--muted);
+  font-size: 10px;
+}
+
+.stms-bottomnav a[aria-current='page'] {
+  color: var(--text);
+  font-weight: 700;
+}
+
+.stms-bottomnav .nav-icon {
+  font-size: 17px;
+  line-height: 1;
+}
+
+@media (min-width: 720px) {
+  .stms-main {
+    padding-top: 28px;
+  }
+}
