@@ -32,6 +32,7 @@ create type candidate_label as enum ('A', 'B', 'C');
 create type history_type as enum ('AUTO', 'MANUAL');
 
 create type ranking_scope as enum ('OVERALL', 'CLUB', 'CREW');
+create type match_status as enum ('CONFIRMED', 'IN_PROGRESS', 'FINISHED');
 
 -- ============================================================
 -- 1. MEMBER
@@ -62,9 +63,6 @@ create table members (
 
   constraint members_ntrp_range
     check (ntrp is null or (ntrp >= 1.0 and ntrp <= 7.0)),
-
-  constraint members_dates_valid
-    check (tennis_start_date <= current_date and join_date <= current_date),
 
   constraint members_guest_affiliation
     check (not is_guest or (not is_club_member and not is_crew_member))
@@ -175,9 +173,8 @@ create table participants (
 
   constraint participants_guest_member_relation
     check (
-      (is_guest = true and member_id is null)
-      or
-      (is_guest = false and member_id is not null)
+      is_guest = true
+      or member_id is not null
     ),
 
   constraint participants_ntrp_range
@@ -295,7 +292,7 @@ create table matches (
   court_name text not null,
   scheduled_at timestamptz,
 
-  status draw_status not null default 'CONFIRMED',
+  status match_status not null default 'CONFIRMED',
 
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now(),
