@@ -1,6 +1,5 @@
--- ============================================================
--- COMMON UPDATED_AT TRIGGER
--- ============================================================
+-- STMS helper functions, triggers, and member directory view
+-- ASCII-only literals are used for reliable copy/paste into SQL Editor.
 
 create or replace function set_updated_at()
 returns trigger
@@ -12,35 +11,38 @@ begin
 end;
 $$;
 
+drop trigger if exists members_set_updated_at on members;
 create trigger members_set_updated_at
 before update on members
 for each row execute function set_updated_at();
 
+drop trigger if exists events_set_updated_at on events;
 create trigger events_set_updated_at
 before update on events
 for each row execute function set_updated_at();
 
+drop trigger if exists participants_set_updated_at on participants;
 create trigger participants_set_updated_at
 before update on participants
 for each row execute function set_updated_at();
 
+drop trigger if exists draws_set_updated_at on draws;
 create trigger draws_set_updated_at
 before update on draws
 for each row execute function set_updated_at();
 
+drop trigger if exists matches_set_updated_at on matches;
 create trigger matches_set_updated_at
 before update on matches
 for each row execute function set_updated_at();
 
+drop trigger if exists results_set_updated_at on results;
 create trigger results_set_updated_at
 before update on results
 for each row execute function set_updated_at();
 
--- ============================================================
--- DISPLAY / EXPERIENCE HELPERS
 -- No nickname column: display name is always derived.
--- ============================================================
-
+-- Korean characters are represented with chr() to avoid clipboard encoding issues.
 create or replace function member_display_name(
   p_birth_date date,
   p_name text,
@@ -54,8 +56,8 @@ as $$
     || p_name
     || '('
     || case p_gender
-         when 'MALE' then '남'
-         when 'FEMALE' then '여'
+         when 'MALE' then chr(45224)
+         when 'FEMALE' then chr(50668)
        end
     || ')';
 $$;
@@ -67,13 +69,14 @@ stable
 as $$
   select case
     when age(current_date, p_tennis_start_date) < interval '1 year'
-      then '1년 미만'
+      then '1' || chr(45380) || ' ' || chr(48120) || chr(47564)
     when age(current_date, p_tennis_start_date) < interval '2 years'
-      then '1~2년'
-    else '2년 이상'
+      then '1~2' || chr(45380)
+    else '2' || chr(45380) || ' ' || chr(51060) || chr(49345)
   end;
 $$;
 
+drop view if exists member_directory;
 create view member_directory as
 select
   m.member_id,
@@ -96,9 +99,7 @@ select
   m.updated_at
 from members m;
 
--- ============================================================
--- IMPORTANT IMPLEMENTATION NOTES
--- ============================================================
+-- Implementation notes:
 -- 1) Supabase Auth/RLS policies are applied after the project is connected.
 -- 2) Ranking calculation is application/service logic; rankings is a derived cache.
 -- 3) A/B/C candidate generation is grouped by generation_group_id + candidate.
