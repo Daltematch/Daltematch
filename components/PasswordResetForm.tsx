@@ -18,7 +18,8 @@ export default function PasswordResetForm() {
     });
 
     if (resetError) {
-      setError("재설정 메일을 보내지 못했습니다. 잠시 후 다시 시도해주세요.");
+      console.error("[STMS] Password reset error:", resetError);
+      setError(`재설정 메일 오류: ${resetError.message}`);
       return;
     }
 
@@ -45,7 +46,7 @@ export default function PasswordResetForm() {
         placeholder="이메일 주소"
         required
       />
-      {error ? <p className="auth-error">{error}</p> : null}
+      {error ? <p className="auth-error">오류: {error}</p> : null}
       <button className="auth-reset-button" type="submit">
         재설정 메일 보내기
       </button>
