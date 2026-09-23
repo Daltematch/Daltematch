@@ -56,7 +56,7 @@ export default async function MembersPage() {
         {error ? (
           <section className="info-card">
             <strong>회원 정보를 불러오지 못했습니다.</strong>
-            <p>잠시 후 다시 확인해주세요.</p>
+            <p>{error.message}</p>
           </section>
         ) : members?.length ? (
           <section className="member-list" aria-label="회원 목록">
