@@ -1,4 +1,5 @@
 import { login } from "./actions";
+import PasswordResetForm from "@/components/PasswordResetForm";
 
 type LoginPageProps = {
   searchParams: Promise<{ error?: string }>;
@@ -59,6 +60,8 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
             로그인
           </button>
         </form>
+
+        <PasswordResetForm />
 
         <p className="auth-note">
           계정 생성 및 권한 설정은 운영진이 관리합니다.
