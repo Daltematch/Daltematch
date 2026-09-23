@@ -831,3 +831,57 @@ a {
   font-size: 11px;
   font-weight: 600;
 }
+
+
+.auth-reset {
+  display: grid;
+  gap: 8px;
+  margin-top: 18px;
+  padding-top: 18px;
+  border-top: 1px solid var(--line);
+}
+
+.auth-reset label {
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.auth-reset input {
+  width: 100%;
+  min-height: 44px;
+  padding: 0 12px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--surface);
+  color: var(--text);
+}
+
+.auth-reset-button {
+  min-height: 42px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--surface);
+  color: var(--text);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.auth-reset p {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.auth-reset span {
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.auth-success {
+  margin: 0;
+  padding: 12px;
+  border-radius: 10px;
+  background: var(--soft);
+  color: var(--text);
+  font-size: 12px;
+}
