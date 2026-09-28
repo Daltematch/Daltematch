@@ -1,13 +1,61 @@
 import BottomNav from "@/components/BottomNav";
+import { createClient } from "@/lib/supabase/server";
 
-const rankings = [
-  ["1", "91양민지(여)", "1,240"],
-  ["2", "90박혜연(여)", "1,180"],
-  ["3", "88최기태(남)", "1,120"],
-  ["4", "92김민수(남)", "1,060"],
-];
+type RankingRow = {
+  member_id: string;
+  scope: "OVERALL" | "CLUB" | "CREW";
+  game_type: "MIXED_DOUBLES" | "MEN_DOUBLES" | "WOMEN_DOUBLES" | "SINGLES";
+  rank: number;
+  points: number;
+};
 
-export default function RankingPage() {
+type MemberRow = {
+  member_id: string;
+  display_name: string;
+  is_club_member: boolean;
+  is_crew_member: boolean;
+  is_guest: boolean;
+};
+
+function groupLabel(member: MemberRow | undefined) {
+  if (!member) return "회원";
+  if (member.is_guest) return "게스트";
+  if (member.is_club_member && member.is_crew_member) return "클럽 / 크루";
+  if (member.is_crew_member) return "크루";
+  if (member.is_club_member) return "클럽";
+  return "회원";
+}
+
+export default async function RankingPage() {
+  const supabase = await createClient();
+
+  const { data: rankingRows, error: rankingError } = await supabase
+    .from("rankings")
+    .select("member_id, scope, game_type, rank, points")
+    .eq("scope", "OVERALL")
+    .order("rank", { ascending: true });
+
+  const memberIds = (rankingRows ?? []).map((row) => row.member_id);
+  const { data: memberRows, error: memberError } = memberIds.length
+    ? await supabase
+        .from("member_directory")
+        .select("member_id, display_name, is_club_member, is_crew_member, is_guest")
+        .in("member_id", memberIds)
+    : { data: [], error: null };
+
+  const members = new Map(
+    (memberRows ?? []).map((member) => [member.member_id, member as MemberRow]),
+  );
+
+  const rankings = (rankingRows ?? [])
+    .filter((row) => !members.get(row.member_id)?.is_guest)
+    .map((row) => ({
+      ...row,
+      member: members.get(row.member_id),
+    }));
+
+  const error = rankingError ?? memberError;
+
   return (
     <main className="stms-shell">
       <header className="topbar">
@@ -39,15 +87,29 @@ export default function RankingPage() {
           <button className="filter-chip">여</button>
         </div>
 
-        <section className="ranking-list">
-          {rankings.map(([rank, name, points]) => (
-            <div className="ranking-row" key={name}>
-              <strong>{rank}</strong>
-              <span className="member-link">{name}</span>
-              <span>{points} P</span>
-            </div>
-          ))}
-        </section>
+        {error ? (
+          <section className="info-card">
+            <strong>랭킹 정보를 불러오지 못했습니다.</strong>
+            <p>{error.message}</p>
+          </section>
+        ) : rankings.length ? (
+          <section className="ranking-list">
+            {rankings.map((row) => (
+              <div className="ranking-row" key={`${row.member_id}-${row.game_type}`}>
+                <strong>{row.rank}</strong>
+                <span className="member-link">
+                  {row.member?.display_name ?? "알 수 없는 회원"}
+                </span>
+                <span>{Number(row.points).toLocaleString("ko-KR")} P</span>
+              </div>
+            ))}
+          </section>
+        ) : (
+          <section className="info-card">
+            <strong>등록된 랭킹 데이터가 없습니다.</strong>
+            <p>경기 결과가 반영되면 실제 랭킹이 이곳에 표시됩니다.</p>
+          </section>
+        )}
 
         <div className="info-card">
           <strong>게스트는 랭킹에서 제외됩니다.</strong>
